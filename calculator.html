@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .calculator {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            padding: 20px;
+            max-width: 300px;
+        }
+
+        .display {
+            grid-column: span 4;
+            text-align: right;
+            font-size: 24px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        .btn {
+            font-size: 20px;
+            padding: 10px;
+            text-align: center;
+            border: none;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .operator {
+            background-color: #f39c12;
+            color: white;
+        }
+    </style>
+    <title>Basic Calculator</title>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <button class="btn" onclick="appendNumber('7')">7</button>
+        <button class="btn" onclick="appendNumber('8')">8</button>
+        <button class="btn" onclick="appendNumber('9')">9</button>
+        <button class="btn operator" onclick="setOperator('+')">+</button>
+        <button class="btn" onclick="appendNumber('4')">4</button>
+        <button class="btn" onclick="appendNumber('5')">5</button>
+        <button class="btn" onclick="appendNumber('6')">6</button>
+        <button class="btn operator" onclick="setOperator('-')">-</button>
+        <button class="btn" onclick="appendNumber('1')">1</button>
+        <button class="btn" onclick="appendNumber('2')">2</button>
+        <button class="btn" onclick="appendNumber('3')">3</button>
+        <button class="btn operator" onclick="setOperator('*')">*</button>
+        <button class="btn" onclick="appendNumber('0')">0</button>
+        <button class="btn" onclick="clearDisplay()">C</button>
+        <button class="btn operator" onclick="calculate()">=</button>
+        <button class="btn operator" onclick="setOperator('/')">/</button>
+    </div>
+    <script>
+        let displayValue = '0';
+        let currentOperator = '';
+        let firstOperand = null;
+
+        function updateDisplay() {
+            const display = document.getElementById('display');
+            display.textContent = displayValue;
+        }
+
+        function appendNumber(number) {
+            if (displayValue === '0') {
+                displayValue = number;
+            } else {
+                displayValue += number;
+            }
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            displayValue = '0';
+            updateDisplay();
+        }
+
+        function setOperator(operator) {
+            currentOperator = operator;
+            firstOperand = parseFloat(displayValue);
+            displayValue = '0';
+            updateDisplay();
+        }
+
+        function calculate() {
+            const secondOperand = parseFloat(displayValue);
+            if (currentOperator === '+') {
+                displayValue = (firstOperand + secondOperand).toString();
+            } else if (currentOperator === '-') {
+                displayValue = (firstOperand - secondOperand).toString();
+            } else if (currentOperator === '*') {
+                displayValue = (firstOperand * secondOperand).toString();
+            } else if (currentOperator === '/') {
+                displayValue = (firstOperand / secondOperand).toString();
+            }
+            currentOperator = '';
+            firstOperand = null;
+            updateDisplay();
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>
